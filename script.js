@@ -108,14 +108,14 @@ if (contactForm instanceof HTMLFormElement && formStatus) {
       });
 
       if (!response.ok) {
-        showFormStatus(`No se pudo enviar tu mensaje (error ${response.status}). Inténtalo de nuevo o escríbenos directamente a los correos indicados.`, true);
+        showFormStatus(`No se pudo enviar tu mensaje (error ${response.status}). Inténtalo de nuevo o escríbenos directamente a roger.sastre@mgoosi.com.`, true);
         return;
       }
 
       contactForm.reset();
       showFormStatus("Gracias por contactarnos. Tu mensaje fue enviado correctamente.");
     } catch (error) {
-      showFormStatus("No fue posible conectar con el servicio de envío. Revisa tu conexión e inténtalo de nuevo o escríbenos directamente a los correos indicados.", true);
+      showFormStatus("No fue posible conectar con el servicio de envío. Revisa tu conexión e inténtalo de nuevo o escríbenos directamente a roger.sastre@mgoosi.com.", true);
       console.error("Error al enviar el formulario de contacto:", error);
     } finally {
       submitButton.disabled = false;
