@@ -293,7 +293,9 @@
           </div>
         </div>
         <div class="contact-form-wrap reveal">
-          <form class="contact-form" id="contact-form">
+          <form class="contact-form" id="contact-form" action="https://formspree.io/f/xqerddlz" method="POST">
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde mgoosi.com">
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" hidden>
             <div class="form-heading">
               <h3>Cuéntanos sobre tu proyecto</h3>
               <p>Completa tus datos y el motivo de contacto.</p>
@@ -316,8 +318,8 @@
               <label for="contact-message">Mensaje</label>
               <textarea id="contact-message" name="message" rows="4" required></textarea>
             </div>
-            <button class="button button-accent form-submit" type="button">Validar mis datos <span aria-hidden="true">→</span></button>
-            <p class="form-disclaimer">Este formulario solo valida los campos en tu navegador. No envía ni guarda datos. Para contactarnos, utiliza los correos indicados.</p>
+            <button class="button button-accent form-submit" type="submit">Enviar mensaje <span aria-hidden="true">→</span></button>
+            <p class="form-disclaimer">Al enviar este formulario, tus datos se transmitirán de forma segura a nuestro equipo para atender tu consulta.</p>
             <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
           </form>
         </div>

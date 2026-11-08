@@ -82,22 +82,43 @@ if ("IntersectionObserver" in window) {
 const contactForm = document.querySelector("#contact-form");
 const formStatus = document.querySelector("#form-status");
 if (contactForm instanceof HTMLFormElement && formStatus) {
-  const validationButton = contactForm.querySelector('button[type="button"]');
-  const showFormStatus = () => {
-    formStatus.textContent = "Tus datos son válidos en este navegador. Este formulario no envía ni guarda el mensaje. Para contactarnos, escríbenos a roger.sastre@mgoosi.com u omar.maya@mgoosi.com.";
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const showFormStatus = (message, isError = false) => {
+    formStatus.textContent = message;
+    formStatus.classList.toggle("form-status-error", isError);
     formStatus.hidden = false;
   };
 
-  validationButton?.addEventListener("click", () => {
-    if (contactForm.reportValidity()) {
-      showFormStatus();
-    }
-  });
-
-  contactForm.addEventListener("submit", (event) => {
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (contactForm.reportValidity()) {
-      showFormStatus();
+    if (!contactForm.reportValidity() || !(submitButton instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    submitButton.disabled = true;
+    showFormStatus("Enviando tu mensaje…");
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        body: new FormData(contactForm),
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        showFormStatus(`No se pudo enviar tu mensaje (error ${response.status}). Inténtalo de nuevo o escríbenos directamente a los correos indicados.`, true);
+        return;
+      }
+
+      contactForm.reset();
+      showFormStatus("Gracias por contactarnos. Tu mensaje fue enviado correctamente.");
+    } catch (error) {
+      showFormStatus("No fue posible conectar con el servicio de envío. Revisa tu conexión e inténtalo de nuevo o escríbenos directamente a los correos indicados.", true);
+      console.error("Error al enviar el formulario de contacto:", error);
+    } finally {
+      submitButton.disabled = false;
     }
   });
 }
